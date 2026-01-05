@@ -1,0 +1,89 @@
+/* style.css */
+
+body {
+  font-family: Arial;
+  margin:0;
+  padding:0;
+  transition: background 0.3s, color 0.3s;
+}
+
+.dark {
+  background: #121212;
+  color: #fff;
+}
+
+.light {
+  background: #fff;
+  color: #000;
+}
+
+header {
+  display:flex;
+  gap:10px;
+  padding:10px;
+  background:#333;
+  color:#fff;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+}
+
+header button {
+  padding:5px 10px;
+  cursor:pointer;
+}
+
+#app {
+  padding-top:70px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top:10px;
+}
+
+th, td {
+  border:1px solid #ccc;
+  padding:5px;
+  text-align:left;
+}
+
+.Ok {
+  background:#fff;
+}
+
+.Defekt {
+  background:#f88;
+}
+
+.Leer {
+  background:#add8e6;
+}
+
+#login-container {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+}
+
+#login-container input {
+  margin:5px;
+  padding:5px;
+}
+
+button {
+  cursor:pointer;
+}
+
+.action-btn {
+  margin-left:5px;
+}
+
+#filter-gruppe {
+  margin-top:10px;
+  padding:5px;
+}
