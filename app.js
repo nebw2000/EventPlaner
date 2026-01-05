@@ -21,27 +21,51 @@ const loginError = document.getElementById("loginError");
 loginBtn.addEventListener("click", () => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
-  if(!email || !password){ loginError.innerText="E-Mail und Passwort erforderlich!"; return; }
+  
+  if(!email || !password){
+    loginError.innerText="E-Mail und Passwort erforderlich!";
+    return;
+  }
 
   auth.signInWithEmailAndPassword(email,password)
-    .then(()=>{ 
-      document.getElementById("login").classList.add("hidden");
-      document.getElementById("app").classList.remove("hidden");
-      loadTheme(); loadInventar(); loadInfos(); loginError.innerText=""; 
+    .then(() => {
+      // Login erfolgreich
+      showApp();
     })
-    .catch(err=>{ loginError.innerText = err.message; console.error(err); });
+    .catch(err => {
+      loginError.innerText = err.message;
+    });
 });
 
+// Wenn schon eingeloggt → direkt App anzeigen
 auth.onAuthStateChanged(user=>{
-  if(user){ document.getElementById("login").classList.add("hidden"); document.getElementById("app").classList.remove("hidden"); loadTheme(); loadInventar(); loadInfos(); }
+  if(user){ showApp(); }
 });
+
+function showApp(){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  showPage('home');      // Home-Seite direkt anzeigen
+  loadTheme();           // Dark Mode laden
+  loadInventar();        // Inventar laden
+  loadInfos();           // Infos laden
+  loginError.innerText = "";
+}
 
 // ===================== Navigation =====================
-function showPage(id){ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden")); document.getElementById(id).classList.remove("hidden"); }
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
 
 // ===================== Dark Mode =====================
-function toggleDarkMode(){ document.body.classList.toggle("dark"); localStorage.setItem("dark", document.body.classList.contains("dark")); }
-function loadTheme(){ if(localStorage.getItem("dark")==="true") document.body.classList.add("dark"); }
+function toggleDarkMode(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem("dark", document.body.classList.contains("dark"));
+}
+function loadTheme(){
+  if(localStorage.getItem("dark")==="true") document.body.classList.add("dark");
+}
 
 // ===================== Formular =====================
 function openForm(){ document.getElementById("form").classList.remove("hidden"); }
