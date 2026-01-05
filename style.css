@@ -1,7 +1,24 @@
+:root {
+  --bg: #f2f2f2;
+  --text: #000;
+  --nav: #222;
+  --card: #fff;
+  --border: #ccc;
+}
+
+body.dark {
+  --bg: #121212;
+  --text: #f2f2f2;
+  --nav: #1e1e1e;
+  --card: #1c1c1c;
+  --border: #444;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f2f2f2;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .hidden {
@@ -9,15 +26,15 @@ body {
 }
 
 nav {
-  background: #222;
+  background: var(--nav);
   padding: 10px;
 }
 
 nav button {
-  margin-right: 10px;
-  color: white;
   background: none;
   border: none;
+  color: white;
+  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -28,21 +45,36 @@ nav button {
 table {
   width: 100%;
   border-collapse: collapse;
+  background: var(--card);
 }
 
 td, th {
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   padding: 6px;
 }
 
 .status-Defekt {
-  background: #ffb3b3;
+  background: #ff9a9a;
 }
 
 .status-Leer {
-  background: #b3e5ff;
+  background: #9ad7ff;
 }
 
-#login {
-  padding: 40px;
+button.delete {
+  background: #c62828;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+#form {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card);
+  padding: 20px;
+  border: 1px solid var(--border);
 }
