@@ -13,67 +13,71 @@
 
 <div id="login">
   <h2>Anmeldung</h2>
-  <input type="password" id="password" placeholder="Passwort">
+  <input type="password" id="password">
   <button onclick="login()">Anmelden</button>
 </div>
 
 <div id="app" class="hidden">
 
-  <nav>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('inventar')">Inventar</button>
-    <button onclick="showPage('aktuell')">Aktuell</button>
-    <button onclick="showPage('wichtig')">Wichtig</button>
-  </nav>
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('inventar')">Inventar</button>
+  <button onclick="showPage('aktuell')">Aktuell</button>
+  <button onclick="showPage('wichtig')">Wichtig</button>
+  <button onclick="toggleDarkMode()">Dark Mode</button>
+</nav>
 
-  <section id="home" class="page">
-    <h1>Gyra Technik</h1>
-  </section>
+<section id="home" class="page">
+  <h1>Gyra Technik</h1>
+</section>
 
-  <section id="inventar" class="page hidden">
-    <h2>Inventar</h2>
+<section id="inventar" class="page hidden">
+  <h2>Inventar</h2>
 
-    <select id="filterGroup" onchange="loadInventar()">
-      <option value="alle">Alle Gruppen</option>
-      <option value="Geräte">Geräte</option>
-      <option value="Zubehör">Zubehör</option>
-      <option value="Nebel">Nebel</option>
-      <option value="Kabel">Kabel</option>
-      <option value="Verbrauch">Verbrauch</option>
-    </select>
+  <input id="search" placeholder="Suchen..." oninput="loadInventar()">
 
-    <button onclick="openForm()">Neu</button>
+  <select id="filterGroup" onchange="loadInventar()">
+    <option value="alle">Alle Gruppen</option>
+    <option>Geräte</option>
+    <option>Zubehör</option>
+    <option>Nebel</option>
+    <option>Kabel</option>
+    <option>Verbrauch</option>
+  </select>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Anzahl</th>
-          <th>Gruppe</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="inventarListe"></tbody>
-    </table>
-  </section>
+  <button onclick="openForm()">Neu</button>
 
-  <section id="aktuell" class="page hidden">
-    <h2>Aktuell</h2>
-    <textarea id="infoText"></textarea>
-    <button onclick="addInfo()">Speichern</button>
-    <ul id="infoListe"></ul>
-  </section>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Anzahl</th>
+        <th>Gruppe</th>
+        <th>Status</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody id="inventarListe"></tbody>
+  </table>
+</section>
 
-  <section id="wichtig" class="page hidden">
-    <h2>Wichtig</h2>
-    <ul id="wichtigListe"></ul>
-  </section>
+<section id="aktuell" class="page hidden">
+  <h2>Aktuell</h2>
+  <textarea id="infoText"></textarea>
+  <button onclick="addInfo()">Speichern</button>
+  <ul id="infoListe"></ul>
+</section>
+
+<section id="wichtig" class="page hidden">
+  <h2>Wichtig</h2>
+  <ul id="wichtigListe"></ul>
+</section>
 
 </div>
 
 <div id="form" class="hidden">
   <input id="name" placeholder="Name">
-  <input id="anzahl" type="number" placeholder="Anzahl">
+  <input id="anzahl" type="number">
 
   <select id="gruppe">
     <option>Geräte</option>
