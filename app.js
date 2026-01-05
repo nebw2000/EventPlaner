@@ -2,11 +2,12 @@
 const firebaseConfig = {
   apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
   authDomain: "gyraevent.firebaseapp.com",
-  databaseURL: "https://gyraevent-default-rtdb.firebaseio.com",
+  databaseURL: "https://gyraevent-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "gyraevent",
   storageBucket: "gyraevent.firebasestorage.app",
   messagingSenderId: "1055376556998",
-  appId: "1:1055376556998:web:cf91c05b247fcd8450a8c7"
+  appId: "1:1055376556998:web:cf91c05b247fcd8450a8c7",
+  measurementId: "G-XN7E94RKC1"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
@@ -21,23 +22,17 @@ const loginError = document.getElementById("loginError");
 loginBtn.addEventListener("click", () => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
-  
+
   if(!email || !password){
-    loginError.innerText="E-Mail und Passwort erforderlich!";
+    loginError.innerText = "E-Mail und Passwort erforderlich!";
     return;
   }
 
   auth.signInWithEmailAndPassword(email,password)
-    .then(() => {
-      // Login erfolgreich
-      showApp();
-    })
-    .catch(err => {
-      loginError.innerText = err.message;
-    });
+    .then(() => { showApp(); })
+    .catch(err => { loginError.innerText = "Fehler: " + err.message; console.error(err); });
 });
 
-// Wenn schon eingeloggt → direkt App anzeigen
 auth.onAuthStateChanged(user=>{
   if(user){ showApp(); }
 });
@@ -45,10 +40,10 @@ auth.onAuthStateChanged(user=>{
 function showApp(){
   document.getElementById("login").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
-  showPage('home');      // Home-Seite direkt anzeigen
-  loadTheme();           // Dark Mode laden
-  loadInventar();        // Inventar laden
-  loadInfos();           // Infos laden
+  showPage('home');
+  loadTheme();
+  loadInventar();
+  loadInfos();
   loginError.innerText = "";
 }
 
@@ -67,11 +62,10 @@ function loadTheme(){
   if(localStorage.getItem("dark")==="true") document.body.classList.add("dark");
 }
 
-// ===================== Formular =====================
+// ===================== Inventar =====================
 function openForm(){ document.getElementById("form").classList.remove("hidden"); }
 function closeForm(){ document.getElementById("form").classList.add("hidden"); editId=null; }
 
-// ===================== Inventar =====================
 function saveItem(){
   const nameVal=document.getElementById("name").value.trim();
   const anzahlVal=document.getElementById("anzahl").value;
