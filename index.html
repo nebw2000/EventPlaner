@@ -1,0 +1,75 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gyra Technik</title>
+
+  <!-- CSS Datei einbinden -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-database-compat.js"></script>
+</head>
+<body class="light">
+
+<div id="login-container">
+  <h2>Passwort eingeben</h2>
+  <input type="password" id="password-input" placeholder="Passwort">
+  <button onclick="checkPassword()">Anmelden</button>
+</div>
+
+<div id="app" style="display:none;">
+  <header>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('inventar')">Inventar</button>
+    <button onclick="showPage('aktuell')">Aktuell</button>
+    <button onclick="showPage('wichtig')">Wichtig</button>
+    <button onclick="toggleTheme()">Dark/Light</button>
+  </header>
+
+  <div id="home" class="page"> <h1 style="text-align:center; margin-top:50px;">Gyra Technik</h1> </div>
+
+  <div id="inventar" class="page" style="display:none;">
+    <button onclick="showAddInventarForm()">Neuen Eintrag hinzufügen</button>
+    <div id="inventar-form" style="display:none; margin-top:10px;">
+      Name: <input type="text" id="inv-name">
+      Anzahl: <input type="number" id="inv-anzahl">
+      Gruppe: <select id="inv-gruppe"><option>Geräte</option><option>Zubehör</option><option>Nebel</option><option>Kabel</option><option>Verbrauchsgegenstände</option></select>
+      Status: <select id="inv-status"><option>Ok</option><option>Defekt</option><option>Leer</option></select>
+      <button onclick="addInventar()">Hinzufügen</button>
+    </div>
+
+    <select id="filter-gruppe" onchange="filterInventar()">
+      <option value="Alle">Alle Gruppen</option>
+      <option>Geräte</option>
+      <option>Zubehör</option>
+      <option>Nebel</option>
+      <option>Kabel</option>
+      <option>Verbrauchsgegenstände</option>
+    </select>
+
+    <table id="inventar-table"><thead><tr><th>Name</th><th>Anzahl</th><th>Gruppe</th><th>Status</th><th>Aktionen</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div id="aktuell" class="page" style="display:none;">
+    <button onclick="showAddAktuellForm()">Neuen Eintrag</button>
+    <div id="aktuell-form" style="display:none; margin-top:10px;">
+      Text: <input type="text" id="aktuell-text">
+      <button onclick="addAktuell()">Hinzufügen</button>
+    </div>
+    <ul id="aktuell-list"></ul>
+  </div>
+
+  <div id="wichtig" class="page" style="display:none;">
+    <table id="wichtig-table"><thead><tr><th>Name</th><th>Anzahl</th><th>Gruppe</th><th>Status</th></tr></thead><tbody></tbody></table>
+  </div>
+</div>
+
+<!-- JavaScript Datei einbinden -->
+<script src="app.js"></script>
+
+</body>
+</html>
