@@ -1,7 +1,5 @@
-// app.js
-
 const firebaseConfig = {
-  apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
+  apiKey: "DEIN_API_KEY",
   authDomain: "gyraevent.firebaseapp.com",
   databaseURL: "https://gyraevent-default-rtdb.firebaseio.com",
   projectId: "gyraevent",
@@ -12,124 +10,115 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-let inventarData = {};
 
-// Passwortschutz
-function checkPassword() {
-  const pw = document.getElementById('password-input').value;
-  if(pw === 'GyraTechnik') {
-    document.getElementById('login-container').style.display='none';
-    document.getElementById('app').style.display='block';
+let editId = null;
+
+function login() {
+  const pw = document.getElementById("password").value;
+  if (pw === "GyraTechnik") {
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
     loadInventar();
-    loadAktuell();
-    loadWichtig();
+    loadInfos();
+  }
+}
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function openForm() {
+  document.getElementById("form").classList.remove("hidden");
+}
+
+function closeForm() {
+  document.getElementById("form").classList.add("hidden");
+  editId = null;
+}
+
+function saveItem() {
+  const item = {
+    name: name.value,
+    anzahl: anzahl.value,
+    gruppe: gruppe.value,
+    status: status.value
+  };
+
+  if (editId) {
+    db.ref("inventar/" + editId).set(item);
   } else {
-    alert('Falsches Passwort');
+    db.ref("inventar").push(item);
   }
+
+  closeForm();
 }
 
-// Dark/Light Mode
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  document.body.classList.toggle('light');
-}
-
-// Seiten wechseln
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
-  document.getElementById(page).style.display='block';
-}
-
-// Inventar hinzufügen
-function showAddInventarForm() { document.getElementById('inventar-form').style.display='block'; }
-function addInventar() {
-  const name = document.getElementById('inv-name').value;
-  const anzahl = Number(document.getElementById('inv-anzahl').value);
-  const gruppe = document.getElementById('inv-gruppe').value;
-  const status = document.getElementById('inv-status').value;
-  db.ref('inventar').push().set({name, anzahl, gruppe, status, erstelltAm: Date.now()});
-}
-
-// Aktuell Einträge
-function showAddAktuellForm() { document.getElementById('aktuell-form').style.display='block'; }
-function addAktuell() {
-  const text = document.getElementById('aktuell-text').value;
-  db.ref('aktuell').push().set({text, erstelltAm: Date.now()});
-}
-
-// Inventar laden und rendern
 function loadInventar() {
-  db.ref('inventar').on('value', snapshot => {
-    inventarData = snapshot.val() || {};
-    renderInventar();
+  const filter = filterGroup.value;
+  const list = document.getElementById("inventarListe");
+  list.innerHTML = "";
+
+  db.ref("inventar").on("value", snap => {
+    list.innerHTML = "";
+    snap.forEach(child => {
+      const d = child.val();
+      if (filter !== "alle" && d.gruppe !== filter) return;
+
+      const tr = document.createElement("tr");
+      tr.className = "status-" + d.status;
+      tr.innerHTML = `
+        <td>${d.name}</td>
+        <td>${d.anzahl}</td>
+        <td>${d.gruppe}</td>
+        <td>${d.status}</td>
+      `;
+      tr.onclick = () => editItem(child.key, d);
+      list.appendChild(tr);
+    });
+
+    loadWichtig();
   });
 }
 
-function renderInventar() {
-  const tbody = document.querySelector('#inventar-table tbody');
-  tbody.innerHTML='';
-  const filter = document.getElementById('filter-gruppe').value;
-  for(let key in inventarData){
-    const item = inventarData[key];
-    if(filter==='Alle' || item.gruppe===filter){
-      const tr = document.createElement('tr');
-      tr.className = item.status;
-      tr.innerHTML = `<td>${item.name}</td><td>${item.anzahl}</td><td>${item.gruppe}</td><td>${item.status}</td>
-        <td><button class='action-btn' onclick='editInventar("${key}")'>Bearbeiten</button>
-        <button class='action-btn' onclick='deleteInventar("${key}")'>Löschen</button></td>`;
-      tbody.appendChild(tr);
-    }
-  }
+function editItem(id, d) {
+  editId = id;
+  openForm();
+  name.value = d.name;
+  anzahl.value = d.anzahl;
+  gruppe.value = d.gruppe;
+  status.value = d.status;
 }
 
-function filterInventar() { renderInventar(); }
-
-function editInventar(key){
-  const item = inventarData[key];
-  const name = prompt('Name', item.name);
-  const anzahl = prompt('Anzahl', item.anzahl);
-  const gruppe = prompt('Gruppe', item.gruppe);
-  const status = prompt('Status', item.status);
-  db.ref('inventar/'+key).set({name, anzahl, gruppe, status, erstelltAm:item.erstelltAm});
-}
-
-function deleteInventar(key){
-  if(confirm('Eintrag wirklich löschen?')) db.ref('inventar/'+key).remove();
-}
-
-// Aktuell laden
-function loadAktuell() {
-  db.ref('aktuell').on('value', snapshot => {
-    const data = snapshot.val() || {};
-    const list = document.getElementById('aktuell-list');
-    list.innerHTML='';
-    for(let key in data){
-      const li = document.createElement('li');
-      li.textContent = data[key].text;
-      const editBtn = document.createElement('button'); editBtn.textContent='Bearbeiten';
-      editBtn.onclick=()=>{ const text = prompt('Text', data[key].text); db.ref('aktuell/'+key).update({text}); };
-      const delBtn = document.createElement('button'); delBtn.textContent='Löschen';
-      delBtn.onclick=()=>{ if(confirm('Eintrag löschen?')) db.ref('aktuell/'+key).remove(); };
-      li.appendChild(editBtn); li.appendChild(delBtn);
-      list.appendChild(li);
-    }
-  });
-}
-
-// Wichtig laden
 function loadWichtig() {
-  db.ref('inventar').on('value', snapshot => {
-    const data = snapshot.val() || {};
-    const tbody = document.querySelector('#wichtig-table tbody');
-    tbody.innerHTML='';
-    for(let key in data){
-      const item = data[key];
-      if(item.status==='Defekt' || item.status==='Leer'){
-        const tr = document.createElement('tr');
-        tr.className = item.status;
-        tr.innerHTML = `<td>${item.name}</td><td>${item.anzahl}</td><td>${item.gruppe}</td><td>${item.status}</td>`;
-        tbody.appendChild(tr);
+  const ul = document.getElementById("wichtigListe");
+  ul.innerHTML = "";
+
+  db.ref("inventar").once("value", snap => {
+    snap.forEach(c => {
+      const d = c.val();
+      if (d.status !== "Ok") {
+        const li = document.createElement("li");
+        li.textContent = d.name + " (" + d.status + ")";
+        ul.appendChild(li);
       }
-    }
+    });
+  });
+}
+
+function addInfo() {
+  db.ref("infos").push({ text: infoText.value });
+  infoText.value = "";
+}
+
+function loadInfos() {
+  const ul = document.getElementById("infoListe");
+  db.ref("infos").on("value", snap => {
+    ul.innerHTML = "";
+    snap.forEach(c => {
+      const li = document.createElement("li");
+      li.textContent = c.val().text;
+      ul.appendChild(li);
+    });
   });
 }
