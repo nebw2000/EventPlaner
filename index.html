@@ -12,7 +12,7 @@
   <h2>Login</h2>
   <input type="email" id="email" placeholder="E-Mail">
   <input type="password" id="password" placeholder="Passwort">
-  <button onclick="login()">Anmelden</button>
+  <button>Anmelden</button>
   <p id="loginError"></p>
 </div>
 
@@ -36,7 +36,6 @@
   <!-- INVENTAR -->
   <section id="inventar" class="page hidden">
     <h2>Inventar</h2>
-
     <input id="search" placeholder="Suchen..." oninput="loadInventar()">
     <select id="filterGroup" onchange="loadInventar()">
       <option value="alle">Alle Gruppen</option>
