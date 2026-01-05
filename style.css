@@ -1,70 +1,203 @@
+/* ===================== Grundstil ===================== */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #fff;
-  color: #000;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
 }
 
 .hidden { display: none; }
 
 .dark {
-  background-color: #121212;
+  background-color: #1e1e2f;
   color: #f0f0f0;
 }
 
+/* ===================== NAVIGATION ===================== */
 nav {
-  background-color: #333;
+  background-color: #6200ea;
   color: #fff;
-  padding: 10px;
   display: flex;
   gap: 10px;
+  padding: 12px 20px;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 nav button {
-  background-color: #555;
+  background-color: #7c4dff;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+nav button:hover {
+  background-color: #9c6cff;
+}
+
+/* ===================== SEITEN ===================== */
+.page {
+  padding: 20px 30px;
+}
+
+h1 {
+  font-size: 48px;
+  text-align: center;
+  margin-top: 40px;
+  color: #6200ea;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* ===================== LOGIN ===================== */
+#login {
+  max-width: 400px;
+  margin: 100px auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+#login input {
+  width: 80%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#login button {
+  padding: 10px 20px;
+  background-color: #6200ea;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-nav button:hover { background-color: #777; }
+#login button:hover { background-color: #7c4dff; }
 
+/* ===================== TABLE ===================== */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 table th, table td {
-  border: 1px solid #ccc;
-  padding: 5px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
   text-align: left;
 }
 
-.status-Ok { background-color: #d4f4d4; }
-.status-Defekt { background-color: #f4d4d4; }
-.status-Leer { background-color: #d4e0f4; }
-
-button.delete {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 3px 5px;
-  cursor: pointer;
+table th {
+  background-color: #6200ea;
+  color: #fff;
 }
 
-button.delete:hover { background-color: darkred; }
+tr:hover { background-color: #f0e6ff; }
+
+/* ===================== STATUSFARBEN ===================== */
+.status-Ok { background-color: #d4f4d4; }        /* Grün ✅ */
+.status-Defekt { background-color: #f4d4d4; }    /* Rot ❌ */
+.status-Leer { background-color: #d4e0f4; }      /* Hellblau ⚠️ */
+
+/* ===================== BUTTONS ===================== */
+button.delete {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+button.delete:hover { background-color: #b71c1c; }
 
 #form {
   position: fixed;
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  background: #eee;
-  padding: 20px;
-  border: 2px solid #333;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid #6200ea;
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
   z-index: 100;
 }
-.dark #form { background: #222; border-color: #fff; }
+
+.dark #form { background: #2c2c3c; border-color: #bb86fc; color: #fff; }
+
+#form input, #form select {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#form button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #6200ea;
+  color: #fff;
+}
+
+#form button:hover { background-color: #7c4dff; }
+
+/* ===================== TEXTAREA AKTUELL ===================== */
+#aktuell textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* ===================== LISTEN ===================== */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  background-color: #e8eaf6;
+  margin-bottom: 6px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+ul li:hover { background-color: #d1c4e9; }
+
+/* ===================== DARK MODE ===================== */
+.dark nav { background-color: #3700b3; }
+.dark nav button { background-color: #6200ea; }
+.dark table th { background-color: #3700b3; }
+.dark tr:hover { background-color: #3a3a50; }
+.dark .status-Ok { background-color: #1b5e20; color: #fff; }
+.dark .status-Defekt { background-color: #b71c1c; color: #fff; }
+.dark .status-Leer { background-color: #0d47a1; color: #fff; }
+.dark ul li { background-color: #2c2c3c; }
+.dark ul li:hover { background-color: #3a3a50; }
