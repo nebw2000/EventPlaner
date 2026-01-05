@@ -11,23 +11,38 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+const auth = firebase.auth();
 
-// ===================== Globale Variablen =====================
 let editId = null;
 
 // ===================== Login =====================
 function login() {
-  const pass = document.getElementById("password").value;
-  if(pass === "GyraTechnik") {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("app").classList.remove("hidden");
+      loadTheme();
+      loadInventar();
+      loadInfos();
+    })
+    .catch(err => {
+      document.getElementById("loginError").innerText = err.message;
+    });
+}
+
+// Automatisch prüfen, ob bereits angemeldet
+auth.onAuthStateChanged(user => {
+  if(user){
     document.getElementById("login").classList.add("hidden");
     document.getElementById("app").classList.remove("hidden");
     loadTheme();
     loadInventar();
     loadInfos();
-  } else {
-    alert("Falsches Passwort!");
   }
-}
+});
 
 // ===================== Navigation =====================
 function showPage(id) {
@@ -40,7 +55,6 @@ function toggleDarkMode() {
   document.body.classList.toggle("dark");
   localStorage.setItem("dark", document.body.classList.contains("dark"));
 }
-
 function loadTheme() {
   if(localStorage.getItem("dark") === "true") document.body.classList.add("dark");
 }
@@ -71,12 +85,10 @@ function saveItem() {
   closeForm();
 }
 
-// Löschen
 function deleteItem(id) {
   if(confirm("Eintrag wirklich löschen?")) db.ref("inventar/" + id).remove();
 }
 
-// Laden
 function loadInventar() {
   const filter = document.getElementById("filterGroup").value;
   const query = document.getElementById("search").value.toLowerCase();
@@ -91,14 +103,14 @@ function loadInventar() {
       if(!data.name.toLowerCase().includes(query)) return;
 
       const tr = document.createElement("tr");
-      tr.className = "status-" + data.status;
+      tr.className = "status-" + (data.status.includes("✅") ? "Ok" : data.status.includes("❌") ? "Defekt" : "Leer");
 
       tr.innerHTML = `
         <td>${data.name}</td>
         <td>${data.anzahl}</td>
         <td>${data.gruppe}</td>
         <td>${data.status}</td>
-        <td><button class="delete" onclick="deleteItem('${child.key}')">Löschen</button></td>
+        <td><button class="delete" onclick="deleteItem('${child.key}')">❌ Löschen</button></td>
       `;
       tr.onclick = () => editItem(child.key, data);
       tbody.appendChild(tr);
@@ -116,14 +128,13 @@ function editItem(id, data) {
   document.getElementById("status").value = data.status;
 }
 
-// Wichtig
 function loadWichtig() {
   const ul = document.getElementById("wichtigListe");
   ul.innerHTML = "";
   db.ref("inventar").once("value").then(snapshot => {
     snapshot.forEach(child => {
       const data = child.val();
-      if(data.status !== "Ok") {
+      if(!data.status.includes("✅")) {
         const li = document.createElement("li");
         li.textContent = `${data.name} (${data.status})`;
         ul.appendChild(li);
