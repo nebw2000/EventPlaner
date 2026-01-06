@@ -1,11 +1,16 @@
-// FIREBASE
+// FIREBASE INITIALISIERUNG
 firebase.initializeApp({
   apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
   authDomain: "gyraevent.firebaseapp.com",
   databaseURL: "https://gyraevent-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "gyraevent"
+  projectId: "gyraevent",
+  storageBucket: "gyraevent.firebasestorage.app",
+  messagingSenderId: "1055376556998",
+  appId: "1:1055376556998:web:cf91c05b247fcd8450a8c7"
 });
 
+const auth = firebase.auth();
+const db = firebase.database();
 const auth = firebase.auth();
 const db = firebase.database();
 
