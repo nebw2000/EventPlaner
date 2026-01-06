@@ -2,102 +2,22 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>GyRa Technik</title>
+  <title>GyRa Technik Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- POPUP FEHLER -->
-<div id="popup" class="popup hidden">falsch</div>
+<div class="login-box">
+  <h1>GyRa Technik</h1>
 
-<!-- LOGIN -->
-<div id="login">
-  <h2>Anmeldung</h2>
-  <input id="email" placeholder="Benutzer">
+  <input id="email" type="text" placeholder="Benutzer">
   <input id="password" type="password" placeholder="Passwort">
+
   <button id="loginBtn">Anmelden</button>
+
+  <div id="errorBox">Falsch</div>
 </div>
 
-<!-- APP -->
-<div id="app" class="hidden">
-
-  <!-- NAV -->
-  <div class="nav">
-    <div class="nav-left">
-      <button onclick="showPage('home')">Home</button>
-      <button onclick="showPage('inventar')">Inventar</button>
-      <button onclick="showPage('tv')">TV</button>
-      <button onclick="showPage('weiteres')">Weiteres</button>
-    </div>
-  </div>
-
-  <!-- HOME -->
-  <section id="home" class="page">
-    <div class="center">
-      <div id="clock" class="clock"></div>
-      <div id="date" class="date"></div>
-      <div class="title">GyRa Technik</div>
-    </div>
-  </section>
-
-  <!-- INVENTAR -->
-  <section id="inventar" class="page hidden">
-    <div class="top-bar">
-      <input id="search" placeholder="Suchen" oninput="loadInventar()">
-      <button class="green" onclick="openForm()">Hinzufügen</button>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Anzahl</th>
-          <th>Gruppe</th>
-          <th>Aktion</th>
-        </tr>
-      </thead>
-      <tbody id="inventarListe"></tbody>
-    </table>
-  </section>
-
-  <!-- TV -->
-  <section id="tv" class="page hidden center">
-    <div id="tvClock" class="clock"></div>
-    <div class="subtitle">Zeitplan</div>
-    <label><input type="checkbox"> Im Zeitplan</label><br>
-    <label><input type="checkbox"> Nicht im Zeitplan</label>
-  </section>
-
-  <!-- WEITERES -->
-  <section id="weiteres" class="page hidden center">
-    <a href="#">Forrest</a><br>
-    <a href="#">folgt noch</a>
-    <p>Ihr Gyra Technik Team</p>
-  </section>
-
-</div>
-
-<!-- INVENTAR FORM -->
-<div id="form" class="modal hidden">
-  <input id="iname" placeholder="Name">
-  <input id="ianzahl" type="number" placeholder="Anzahl">
-  <select id="igruppe">
-    <option>Kabel</option>
-    <option>Pulte</option>
-    <option>Licht</option>
-    <option>Ton</option>
-    <option>Materialien</option>
-    <option>Effekte</option>
-  </select>
-  <button onclick="saveItem()">Speichern</button>
-  <button onclick="closeForm()">Abbrechen</button>
-</div>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.30.0/firebase-database-compat.js"></script>
-
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
