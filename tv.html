@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>GyRa Technik TV</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="home.html">Home</a>
+  <a href="inventar.html">Inventar</a>
+  <a href="tv.html">TV</a>
+  <a href="weiteres.html">Weiteres</a>
+</div>
+
+<h2 style="text-align:center; margin-top:50px;" id="time"></h2>
+<h3 style="text-align:center;">Zeitplan</h3>
+
+<div style="width:200px; margin:20px auto;">
+  <label><input type="checkbox"> Im Zeitplan</label><br>
+  <label><input type="checkbox"> Nicht im Zeitplan</label>
+</div>
+
+<script>
+function updateTime() {
+  const now = new Date();
+  document.getElementById("time").innerText = now.toLocaleTimeString();
+}
+setInterval(updateTime, 1000);
+updateTime();
+</script>
+
+</body>
+</html>
