@@ -8,10 +8,25 @@
 <body>
 
 <div class="topbar">
-  <span>GyRa Technik</span>
+  <a href="home.html">Home</a>
+  <a href="inventar.html">Inventar</a>
+  <a href="tv.html">TV</a>
+  <a href="weiteres.html">Weiteres</a>
 </div>
 
-<h2 style="text-align:center; margin-top:40px;">Login erfolgreich</h2>
+<h2 style="text-align:center; margin-top:50px;" id="time"></h2>
+<h3 style="text-align:center;" id="date"></h3>
+<h1 style="text-align:center; margin-top:30px;">GyRa Technik</h1>
+
+<script>
+function updateTime() {
+  const now = new Date();
+  document.getElementById("time").innerText = now.toLocaleTimeString();
+  document.getElementById("date").innerText = now.toLocaleDateString();
+}
+setInterval(updateTime, 1000);
+updateTime();
+</script>
 
 </body>
 </html>
