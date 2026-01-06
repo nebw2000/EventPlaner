@@ -7,7 +7,6 @@
 </head>
 <body>
 
-<!-- Obere Leiste -->
 <div class="topbar">
   <a href="home.html">Home</a>
   <a href="inventar.html">Inventar</a>
@@ -15,23 +14,19 @@
   <a href="weiteres.html">Weiteres</a>
 </div>
 
-<!-- Überschrift -->
 <h1 style="text-align:center; margin-top:30px;">GyRa Technik Inventar</h1>
 
-<!-- Suchfeld -->
 <div style="text-align:center; margin-top:20px;">
   <input type="text" id="search" placeholder="Suche...">
   <button class="add-btn" id="addBtn">Hinzufügen</button>
 </div>
 
-<!-- Tabelle -->
 <div class="table-container">
   <table id="inventarTable">
     <tr><th>Name</th><th>Anzahl</th><th>Gruppe</th><th>Aktionen</th></tr>
   </table>
 </div>
 
-<!-- Popup zum Hinzufügen/Bearbeiten -->
 <div class="popup" id="popup">
   <h2>Eintrag hinzufügen</h2>
   <input id="name" placeholder="Name">
@@ -51,7 +46,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
   authDomain: "gyraevent.firebaseapp.com",
@@ -73,10 +67,8 @@ const searchInput = document.getElementById("search");
 
 let editKey = null;
 
-// Öffnen Popup
 addBtn.addEventListener("click", ()=> popup.style.display="block");
 
-// Speichern / Hinzufügen
 saveBtn.addEventListener("click", ()=>{
   const name = document.getElementById("name").value.trim();
   const amount = document.getElementById("amount").value.trim();
@@ -97,7 +89,7 @@ saveBtn.addEventListener("click", ()=>{
   document.getElementById("amount").value="";
 });
 
-// Daten aus DB laden
+// Daten aus Firebase laden
 const dbRef = ref(db, "inventar");
 onValue(dbRef, snapshot=>{
   const filter = searchInput.value.toLowerCase();
@@ -124,9 +116,7 @@ onValue(dbRef, snapshot=>{
       const delBtn = document.createElement("button");
       delBtn.innerText="Löschen";
       delBtn.style.marginLeft="5px";
-      delBtn.addEventListener("click", ()=>{
-        remove(ref(db, "inventar/"+child.key));
-      });
+      delBtn.addEventListener("click", ()=> remove(ref(db, "inventar/"+child.key)));
 
       editCell.appendChild(editBtn);
       editCell.appendChild(delBtn);
@@ -134,7 +124,6 @@ onValue(dbRef, snapshot=>{
   });
 });
 
-// Suche live
 searchInput.addEventListener("input", ()=> onValue(dbRef, ()=>{}));
 </script>
 
