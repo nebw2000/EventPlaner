@@ -13,10 +13,20 @@
 
 <main id="cards"></main>
 
+<!-- Popup für neue Einträge -->
 <div id="popup" class="popup hidden">
   <input id="title" placeholder="Überschrift">
   <textarea id="content" placeholder="Text"></textarea>
   <button id="saveBtn">Speichern</button>
+</div>
+
+<!-- Popup für Anzeigen + Löschen -->
+<div id="viewPopup" class="popup hidden">
+  <h2 id="viewTitle"></h2>
+  <p id="viewContent"></p>
+  <input id="deletePassword" type="password" placeholder="Passwort zum Löschen">
+  <button id="deleteBtn">Löschen</button>
+  <button id="closeView">Schließen</button>
 </div>
 
 <script type="module" src="app.js"></script>
