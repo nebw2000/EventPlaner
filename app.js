@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+// FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
   authDomain: "gyraevent.firebaseapp.com",
@@ -13,38 +13,28 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getDatabase(app);
 
 /* LOGIN */
 const loginBtn = document.getElementById("loginBtn");
 if (loginBtn) {
   loginBtn.addEventListener("click", () => {
-    const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const error = document.getElementById("error");
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        window.location.href = "home.html";
-      })
-      .catch(() => {
-        error.classList.remove("hidden");
-        setTimeout(() => error.classList.add("hidden"), 3000);
-      });
+    if(password === "2020"){
+      window.location.href = "home.html";
+    } else {
+      error.classList.remove("hidden");
+      setTimeout(()=>error.classList.add("hidden"),3000);
+    }
   });
 }
 
 /* HAUPTSEITE */
 const cards = document.getElementById("cards");
 
-if (cards) {
-  onAuthStateChanged(auth, user => {
-    if (!user) {
-      window.location.href = "index.html";
-    }
-  });
-
+if(cards){
   const popup = document.getElementById("popup");
   const newBtn = document.getElementById("newBtn");
   const saveBtn = document.getElementById("saveBtn");
@@ -55,17 +45,13 @@ if (cards) {
     const title = document.getElementById("title").value;
     const content = document.getElementById("content").value;
 
-    if (!title || !content) return;
+    if(!title || !content) return;
 
-    push(ref(db, "posts"), {
-      title,
-      content
-    });
-
+    push(ref(db,"posts"), { title, content });
     popup.classList.add("hidden");
   };
 
-  onValue(ref(db, "posts"), snapshot => {
+  onValue(ref(db,"posts"), snapshot => {
     cards.innerHTML = "";
     snapshot.forEach(child => {
       const data = child.val();
