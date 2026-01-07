@@ -1,8 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-/* FIREBASE */
+/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
   authDomain: "gyraevent.firebaseapp.com",
@@ -14,72 +13,61 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getDatabase(app);
 
 /* ELEMENTE */
-const loginScreen = document.getElementById("loginScreen");
-const mainScreen = document.getElementById("mainScreen");
-
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
+const loginPage = document.getElementById("loginPage");
+const mainPage = document.getElementById("mainPage");
 const loginBtn = document.getElementById("loginBtn");
-const loginError = document.getElementById("loginError");
+const errorBox = document.getElementById("loginError");
 
 const newBtn = document.getElementById("newBtn");
-const popupOverlay = document.getElementById("popupOverlay");
-const savePost = document.getElementById("savePost");
-const popupTitle = document.getElementById("popupTitle");
-const popupText = document.getElementById("popupText");
-const cardGrid = document.getElementById("cardGrid");
+const popup = document.getElementById("popup");
+const saveBtn = document.getElementById("saveBtn");
+
+const titleInput = document.getElementById("titleInput");
+const textInput = document.getElementById("textInput");
+const cards = document.getElementById("cards");
 
 /* LOGIN */
 loginBtn.onclick = () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
+  const user = document.getElementById("email").value;
+  const pass = document.getElementById("password").value;
 
-  if (email === "1" && password === "1") {
-    showMain();
-    return;
+  if (user === "1" && pass === "1") {
+    loginPage.classList.add("hidden");
+    mainPage.classList.remove("hidden");
+  } else {
+    errorBox.style.display = "block";
+    setTimeout(() => errorBox.style.display = "none", 3000);
   }
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(showMain)
-    .catch(() => {
-      loginError.style.display = "block";
-      setTimeout(() => loginError.style.display = "none", 3000);
-    });
 };
-
-function showMain() {
-  loginScreen.style.display = "none";
-  mainScreen.style.display = "block";
-}
 
 /* POPUP */
-newBtn.onclick = () => popupOverlay.style.display = "flex";
+newBtn.onclick = () => popup.classList.remove("hidden");
 
-savePost.onclick = () => {
-  const title = popupTitle.value.trim();
-  const text = popupText.value.trim();
-  if (!title || !text) return;
+saveBtn.onclick = () => {
+  if (!titleInput.value || !textInput.value) return;
 
-  push(ref(db, "posts"), { title, text });
+  push(ref(db, "posts"), {
+    title: titleInput.value,
+    text: textInput.value
+  });
 
-  popupOverlay.style.display = "none";
-  popupTitle.value = "";
-  popupText.value = "";
+  titleInput.value = "";
+  textInput.value = "";
+  popup.classList.add("hidden");
 };
 
-/* LOAD POSTS */
+/* LADEN */
 onValue(ref(db, "posts"), snapshot => {
-  cardGrid.innerHTML = "";
+  cards.innerHTML = "";
   snapshot.forEach(child => {
     const data = child.val();
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerText = data.title;
-    card.onclick = () => alert(data.text);
-    cardGrid.appendChild(card);
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerText = data.title;
+    div.onclick = () => alert(data.text);
+    cards.appendChild(div);
   });
 });
