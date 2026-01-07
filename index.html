@@ -2,41 +2,40 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>GyRa Technik</title>
+  <title>GyRa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
   <script type="module" src="app.js"></script>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div id="loginScreen" class="center">
-  <div class="loginBox">
-    <h2>Login</h2>
-    <input id="email" type="text" placeholder="E-Mail oder 1">
-    <input id="password" type="password" placeholder="Passwort oder 1">
+<div id="loginPage" class="page">
+  <div class="login-box">
+    <h1>Login</h1>
+    <input id="email" type="text" placeholder="Benutzer">
+    <input id="password" type="password" placeholder="Passwort">
     <button id="loginBtn">Anmelden</button>
-    <div id="loginError">Falsch</div>
+    <div id="loginError">falsch</div>
   </div>
 </div>
 
 <!-- HAUPTSEITE -->
-<div id="mainScreen">
-  <div class="topBar">
-    <button id="newBtn">Neu</button>
-  </div>
+<div id="mainPage" class="page hidden">
+  <button id="newBtn">Neu</button>
 
-  <div id="cardGrid"></div>
+  <div id="cards"></div>
 </div>
 
 <!-- POPUP -->
-<div id="popupOverlay">
-  <div class="popup">
-    <h3>Neuer Eintrag</h3>
-    <input id="popupTitle" placeholder="Überschrift">
-    <textarea id="popupText" placeholder="Text"></textarea>
-    <button id="savePost">Speichern</button>
+<div id="popup" class="hidden">
+  <div class="popup-box">
+    <input id="titleInput" placeholder="Überschrift">
+    <textarea id="textInput" placeholder="Text"></textarea>
+    <button id="saveBtn">Speichern</button>
   </div>
 </div>
 
