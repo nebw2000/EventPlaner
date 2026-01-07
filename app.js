@@ -44,6 +44,7 @@ if(cards){
   const closeView = document.getElementById("closeView");
 
   newBtn.onclick = () => popup.classList.remove("hidden");
+
   saveBtn.onclick = () => {
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
@@ -68,11 +69,14 @@ if(cards){
       div.className = "card";
       div.textContent = data.title;
 
+      // Popup mit Inhalt + Löschen
       div.onclick = () => {
         viewPopup.classList.remove("hidden");
         viewTitle.textContent = data.title;
         viewContent.textContent = data.content;
+        deletePassword.value = ""; // Passwortfeld leeren
 
+        // Löschen nur mit Passwort 2009
         deleteBtn.onclick = () => {
           if(deletePassword.value === "2009"){
             remove(ref(db,"posts/"+key))
