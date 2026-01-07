@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// Firebase Config
+// FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyA77Epd0AXYz41c47nXuJHP2EKqWbuneb4",
   authDomain: "gyraevent.firebaseapp.com",
@@ -15,38 +15,49 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const cards = document.getElementById("cards");
-const popup = document.getElementById("popup");
-const newBtn = document.getElementById("newBtn");
-const saveBtn = document.getElementById("saveBtn");
+/* ===== LOGIN ===== */
+const loginBtn = document.getElementById("loginBtn");
+if(loginBtn){
+  loginBtn.addEventListener("click", () => {
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("error");
 
-if(newBtn){
-  newBtn.addEventListener("click", ()=> {
-    popup.classList.remove("hidden");
+    if(password === "2020"){
+      window.location.href = "home.html";
+    } else {
+      error.classList.remove("hidden");
+      setTimeout(()=>error.classList.add("hidden"),3000);
+    }
   });
 }
 
-if(saveBtn){
-  saveBtn.addEventListener("click", ()=> {
+/* ===== HAUPTSEITE ===== */
+const cards = document.getElementById("cards");
+
+if(cards){
+  const popup = document.getElementById("popup");
+  const newBtn = document.getElementById("newBtn");
+  const saveBtn = document.getElementById("saveBtn");
+
+  newBtn.onclick = () => popup.classList.remove("hidden");
+
+  saveBtn.onclick = () => {
     const title = document.getElementById("title").value.trim();
     const content = document.getElementById("content").value.trim();
 
-    if(title === "" || content === "") return alert("Bitte Titel und Text eingeben");
+    if(!title || !content) return alert("Bitte Titel und Text eingeben");
 
-    const postsRef = ref(db, "posts"); // Wichtig: Richtiger Pfad
-    push(postsRef, { title, content })
-      .then(()=> {
+    push(ref(db,"posts"), { title, content })
+      .then(() => {
         popup.classList.add("hidden");
         document.getElementById("title").value = "";
         document.getElementById("content").value = "";
       })
-      .catch(err => alert("Fehler beim Speichern: " + err));
-  });
-}
+      .catch(err => alert("Fehler beim Speichern: "+err));
+  };
 
-// Daten aus Firebase anzeigen
-if(cards){
-  const postsRef = ref(db, "posts");
+  // Inhalte aus Firebase laden
+  const postsRef = ref(db,"posts");
   onValue(postsRef, snapshot => {
     cards.innerHTML = "";
     snapshot.forEach(child => {
