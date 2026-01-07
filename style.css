@@ -1,0 +1,123 @@
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+/* LOGIN */
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #4facfe, #ff6ec4);
+}
+
+.loginBox {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 20px;
+  width: 280px;
+  text-align: center;
+}
+
+.loginBox input {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+.loginBox button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  background: #0a2540;
+  color: white;
+  font-weight: bold;
+}
+
+#loginError {
+  display: none;
+  color: red;
+  margin-top: 10px;
+}
+
+/* MAIN */
+#mainScreen {
+  display: none;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4facfe, #ff6ec4);
+  padding: 20px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.topBar button {
+  padding: 12px 30px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  background: white;
+  font-weight: bold;
+}
+
+/* GRID */
+#cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+/* POPUP */
+#popupOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  width: 300px;
+}
+
+.popup input,
+.popup textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #f2f2f2;
+}
+
+.popup button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  background: #0a2540;
+  color: white;
+}
