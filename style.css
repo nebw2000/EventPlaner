@@ -5,119 +5,102 @@
 
 body {
   margin: 0;
+  background: linear-gradient(135deg, #4f9cff, #ff6fd8);
+  min-height: 100vh;
 }
 
-/* LOGIN */
-.center {
-  height: 100vh;
+.page {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #4facfe, #ff6ec4);
+  min-height: 100vh;
 }
 
-.loginBox {
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(20px);
+.hidden {
+  display: none;
+}
+
+/* LOGIN */
+.login-box {
+  background: rgba(255,255,255,0.85);
   padding: 30px;
-  border-radius: 20px;
-  width: 280px;
+  border-radius: 16px;
+  width: 300px;
   text-align: center;
 }
 
-.loginBox input {
+.login-box input {
   width: 100%;
-  margin: 8px 0;
+  margin-bottom: 10px;
   padding: 10px;
-  border-radius: 10px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
-.loginBox button {
+.login-box button {
   width: 100%;
   padding: 10px;
-  border-radius: 12px;
   border: none;
-  background: #0a2540;
+  border-radius: 8px;
+  background: #007aff;
   color: white;
-  font-weight: bold;
 }
 
 #loginError {
-  display: none;
   color: red;
   margin-top: 10px;
+  display: none;
 }
 
-/* MAIN */
-#mainScreen {
-  display: none;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #4facfe, #ff6ec4);
+/* HAUPTSEITE */
+#mainPage {
+  flex-direction: column;
   padding: 20px;
 }
 
-.topBar {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.topBar button {
-  padding: 12px 30px;
+#newBtn {
+  padding: 12px 20px;
   border-radius: 20px;
   border: none;
-  font-size: 16px;
   background: white;
-  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
-/* GRID */
-#cardGrid {
+#cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  width: 100%;
 }
 
 .card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
+  background: rgba(255,255,255,0.9);
+  padding: 15px;
+  border-radius: 14px;
   cursor: pointer;
 }
 
 /* POPUP */
-#popupOverlay {
-  display: none;
+#popup {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.4);
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.popup {
+.popup-box {
   background: white;
-  border-radius: 20px;
   padding: 20px;
+  border-radius: 16px;
   width: 300px;
 }
 
-.popup input,
-.popup textarea {
+.popup-box input,
+.popup-box textarea {
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  background: #f2f2f2;
-}
-
-.popup button {
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px;
-  border: none;
-  background: #0a2540;
-  color: white;
+  padding: 8px;
 }
