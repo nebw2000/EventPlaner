@@ -5,8 +5,8 @@ body {
   color: white;
 }
 
-.login, .popup {
-  background: rgba(255,255,255,0.2);
+.login-box, .popup {
+  background: rgba(255,255,255,0.15);
   backdrop-filter: blur(20px);
   padding: 30px;
   border-radius: 16px;
@@ -24,6 +24,12 @@ input, textarea, button {
 
 button {
   cursor: pointer;
+  background-color: #0d6efd;
+  color: white;
+}
+
+button:hover {
+  background-color: #0b5ed7;
 }
 
 header {
@@ -39,7 +45,7 @@ header {
 }
 
 .card {
-  background: white;
+  background: rgba(255,255,255,0.8);
   color: black;
   padding: 20px;
   border-radius: 12px;
